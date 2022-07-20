@@ -1,0 +1,21 @@
+server:
+  port: 8088
+
+redis:
+#  host: 195.161.114.18
+  host: localhost
+  port: 6379
+  password: eYVX7EwVmmxKFCDmwMtyKVge8oLd2t81
+
+spring:
+  application:
+    name: reports
+
+eureka:
+  client:
+    register-with-eureka: true
+    fetch-registry: true
+    service-url:
+      defoultZone: http://localhost:8761/eureka/
+  instance:
+    hostname: localhost
