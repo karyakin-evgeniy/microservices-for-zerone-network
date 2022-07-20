@@ -1,0 +1,54 @@
+server:
+  port: 8086
+
+spring:
+  main:
+    web-application-type: reactive
+#    allow-circular-references: true
+  application:
+    name: api-gateway
+  cloud:
+    gateway:
+      default-filters:
+        - DedupeResponseHeader=Access-Control-Allow-Credentials Access-Control-Allow-Origin
+      routes:
+#        - id: login
+#          uri: lb://zerone-backend
+#          predicates:
+#            - Path=api/v1/auth/login
+#            - Header=Access-Control-Allow-Origin
+        - id: zerone-backend
+          uri: lb://zerone-backend
+          predicates:
+            - Path=/api/v1/**
+#          filters:
+#            - name: CircuitBreaker
+#              args:
+#                name: zerone-backend
+#                fallbackuri: forward:/zeroneBackendFallBack
+        - id: swagger
+          uri: lb://zerone-backend
+          predicates:
+            - Path=/swagger-ui/**
+        - id: api-docs
+          uri: lb://zerone-backend
+          predicates:
+            - Path=/v3/api-docs/**
+        - id: reports
+          uri: lb://reports
+          predicates:
+            - Path=/reports/**
+#          filters:
+#            - name: CircuitBreaker
+#              args:
+#                name: reports
+#                fallbackuri: forward:/reportsServiceFallBack
+
+eureka:
+  client:
+    register-with-eureka: true
+    fetch-registry: true
+    service-url:
+      defoultZone: http://localhost:8761/eureka/
+  instance:
+    hostname: localhost
