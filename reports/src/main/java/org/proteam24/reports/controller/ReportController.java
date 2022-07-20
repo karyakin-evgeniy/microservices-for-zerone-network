@@ -25,7 +25,8 @@ public class ReportController {
         return reportService.putReport(reportEntity,principal);
     }
 
-    @GetMapping ResponseEntity getAllReports() {
+    @GetMapping("/")
+    public ResponseEntity getAllReports() {
         return reportService.getAllReports();
     }
 
