@@ -6,7 +6,7 @@ spring:
     web-application-type: reactive
 #    allow-circular-references: true
   application:
-    name: API-GATEWAY
+    name: api-gateway
   cloud:
     gateway:
       default-filters:
@@ -43,3 +43,12 @@ spring:
 #              args:
 #                name: reports
 #                fallbackuri: forward:/reportsServiceFallBack
+
+eureka:
+  client:
+    register-with-eureka: true
+    fetch-registry: true
+    service-url:
+      defoultZone: http://localhost:8761/eureka/
+  instance:
+    hostname: localhost
