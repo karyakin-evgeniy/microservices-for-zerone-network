@@ -7,14 +7,10 @@ spring:
 
 eureka:
   instance:
-    hostname: eureka-server
-    prefer-ip-address: true
-    lease-expiration-duration-in-seconds: 30
-    lease-renewal-interval-in-seconds: 30
+    hostname: host.docker.internal
+#    prefer-ip-address: true
+#    lease-expiration-duration-in-seconds: 30
+#    lease-renewal-interval-in-seconds: 30
   client:
     register-with-eureka: false
     fetch-registry: false
-#    serviceUrl:
-#      defaultZone: http://eureka-server:8761/eureka/
-#  server:
-#    enable-self-preservation: false
