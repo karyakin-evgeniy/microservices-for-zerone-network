@@ -1,0 +1,80 @@
+spring:
+  main:
+    allow-circular-references: true
+  datasource:
+    url: jdbc:mysql://zeronenetwork.design:3308/comand_DB?sessionVariables=sql_mode=''&useUnicode=true&serverTimezone=UTC&useSSL=false&allowPublicKeyRetrieval=true
+#    url: jdbc:mysql://localhost:3308/comand_DB?sessionVariables=sql_mode=''&useUnicode=true&serverTimezone=UTC&useSSL=false&allowPublicKeyRetrieval=true
+    username: ENC(RErI7tJaIqOhIj0A7Jqk1mcWvF778LLhA8biBOynZ+jfRunptLsZnWWUpRKgIzlJ)
+    password: ENC(05Kx6itEXQixd4sLPlWgezvIvT0OUUyRyez8sLNbRKsWqO1GBzQCwgHW4CGpLQwC)
+    hikari:
+      maximum-pool-size: 10
+  jpa:
+    properties:
+      show_sql: true
+    hibernate:
+      ddl-auto: validate
+      naming:
+        physical-strategy: org.proteam24.zeroneapplication.config.naming.EntityReplaceNamingStrategy
+  mail:
+    host: smtp.yandex.ru
+    username: ENC(pNmTe3SF7LfnvS0OIrAb05X/Y2KqUcmI0d9ncXYrlUTYM3GTbLtg4is2BH7GoJ7qIC0bvaI8UYwnEXPNJD61xQ==)
+    password: ENC(Cv1E2Ljgbkp6IMdvU9WQDYsD9pmzZh/VeTjezOQnmTsmchlauLhK1dyA1lw3Wd/jq5nlrQLipZz7AW1GB0cJpg==)
+    port: 465
+    protocol: smtps
+    debug: true
+  liquibase:
+    enabled: true
+jwt:
+  token:
+    secret: ENC(nc+jtLrBqAlCWyddpdcmPg8k0p7RaJn03A0CfMXuK0nckGgFMRRJ5NonaKjEOaG+)
+    expired: 864000000
+server:
+  port: 8086
+logging:
+  level:
+    root: INFO
+#  file.name: logging.log
+zerone:
+  cloudinary:
+    api-key: ENC(YOyFU8K4mLlQ47T3CmE22IdTp3pvUoGHcrQ7UPnJlMCWyRBQKaBIrZGk6dTMKcJe)
+    api-secret: ENC(vamRuNJHu2+BCUNwRHXLCQAFjxsdwrMkkNngrkQgj8uMTrWmYZHj6Jrx9x/IzGMa/FarBXuto8yxGh/uWxX/QQ==)
+    cloud-name: ENC(BSbO5oGnLTuUQccrtx5Kw/GvdfqEE8tgQ3V4T6k7/vGjZSdNiLPApd6RaRpJFdYm)
+    secure: true
+vk:
+  app-id: ENC(tiF3w23SqPysowqp2UUMP0ZqOBdqbljeAS69I/bDMqe6R1mnjFIzNSjlsLWOWRKH)
+  secret: ENC(wO3w0f+Td0T/aP9OUYsyjDpXOK3Z5MLDWLZK7SqDVshRqXR69G0uuCaxz9EOG5WQzvEJ/5Lbv2pYVB7wGsLbvFWulRMVe9wE05mgyzbQnc6sV9avA9PYtgPjD5DZpZEYLjt5twg+fHcycozMNORAsQ==)
+  token: ENC(YBERc7RjThMpWVidJQReU+IssAl7iKrHE9fTp1lDz5ejoBmJLmlMjV8wx53AaK7wQ0CZJLx2ZGUrM9J3TlBNHIuTA/B9B62NNCMfhRhvIGJT3yPVZSAsYlRRvwF0iFX7E+jyXeid86BDIa119s6Qly0gRDRa8+VqoW2R1GE41kw=)
+socketio:
+  host: 0.0.0.0
+  #host: localhost
+  port: 1111
+  #maxFramePayloadLength: 1048576
+  #maxHttpContentLength: 1048576
+  bossCount: 1
+  workCount: 100
+  allowCustomRequests: true
+  upgradeTimeout: 1000000
+  pingTimeout: 6000000
+  pingInterval: 25000
+redis:
+  host: 195.161.114.18
+  port: 6379
+  password: eYVX7EwVmmxKFCDmwMtyKVge8oLd2t81
+management:
+  endpoints:
+    web:
+      exposure:
+        include: health,prometheus,info,metric
+  metrics:
+    export:
+      prometheus:
+        enabled: true
+    distribution:
+      percentiles-histogram:
+        "[http.server.requests]": true
+scheduler:
+  delete:
+    post:
+      day: 10
+    notification:
+      day: 30

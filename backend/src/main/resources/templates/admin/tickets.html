@@ -1,0 +1,12 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Tickets</title>
+</head>
+<body>
+    <div th:each="ticket : ${tickets}">
+        <a th:href="@{'/admin/support/' + ${ticket.id}}" th:text="|${ticket.id}. ${ticket.message}|">Ticket</a>
+    </div>
+</body>
+</html>
