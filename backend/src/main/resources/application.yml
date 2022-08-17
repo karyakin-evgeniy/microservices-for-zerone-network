@@ -2,8 +2,7 @@ spring:
   main:
     allow-circular-references: true
   datasource:
-    url: jdbc:mysql://zeronenetwork.design:3308/comand_DB?sessionVariables=sql_mode=''&useUnicode=true&serverTimezone=UTC&useSSL=false&allowPublicKeyRetrieval=true
-#    url: jdbc:mysql://localhost:3308/comand_DB?sessionVariables=sql_mode=''&useUnicode=true&serverTimezone=UTC&useSSL=false&allowPublicKeyRetrieval=true
+    url: jdbc:mysql://localhost:3308/comand_DB?sessionVariables=sql_mode=''&useUnicode=true&serverTimezone=UTC&useSSL=false&allowPublicKeyRetrieval=true
     username: ENC(RErI7tJaIqOhIj0A7Jqk1mcWvF778LLhA8biBOynZ+jfRunptLsZnWWUpRKgIzlJ)
     password: ENC(05Kx6itEXQixd4sLPlWgezvIvT0OUUyRyez8sLNbRKsWqO1GBzQCwgHW4CGpLQwC)
     hikari:
