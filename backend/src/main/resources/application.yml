@@ -45,8 +45,8 @@ vk:
   secret: ENC(wO3w0f+Td0T/aP9OUYsyjDpXOK3Z5MLDWLZK7SqDVshRqXR69G0uuCaxz9EOG5WQzvEJ/5Lbv2pYVB7wGsLbvFWulRMVe9wE05mgyzbQnc6sV9avA9PYtgPjD5DZpZEYLjt5twg+fHcycozMNORAsQ==)
   token: ENC(YBERc7RjThMpWVidJQReU+IssAl7iKrHE9fTp1lDz5ejoBmJLmlMjV8wx53AaK7wQ0CZJLx2ZGUrM9J3TlBNHIuTA/B9B62NNCMfhRhvIGJT3yPVZSAsYlRRvwF0iFX7E+jyXeid86BDIa119s6Qly0gRDRa8+VqoW2R1GE41kw=)
 socketio:
-  host: 0.0.0.0
-  #host: localhost
+  #host: 0.0.0.0
+  host: localhost
   port: 1111
   #maxFramePayloadLength: 1048576
   #maxHttpContentLength: 1048576
