@@ -11,11 +11,3 @@ spring:
   application:
     name: reports
 
-eureka:
-  client:
-    register-with-eureka: true
-    fetch-registry: true
-    service-url:
-      defoultZone: http://localhost:8761/eureka/
-  instance:
-    hostname: host.docker.internal

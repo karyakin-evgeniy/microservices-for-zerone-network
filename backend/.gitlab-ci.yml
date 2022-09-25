@@ -1,0 +1,68 @@
+stages:
+    - test
+    - build
+    - sonar
+    - deploy
+
+variables:
+   MAVEN_OPTS: "-Dmaven.repo.local=./.m2/repository"
+
+image: bukmopbacob/docker-jpt-24:0.0.7
+
+stage_test:
+    stage: test
+    script:
+        - mvn -v
+        - mvn -Djasypt.encryptor.password=comandProject test
+    cache:
+        paths:
+            - ./.m2
+
+stage_build:
+    stage: build
+    script:
+        - mvn -DskipTests package
+        - ls target
+    artifacts:
+        paths:
+            - target/*.jar
+    cache:
+        paths:
+            - ./.m2
+
+sonarqube-check:
+    stage:
+        sonar
+    variables:
+        SONAR_USER_HOME: "${CI_PROJECT_DIR}/.sonar"
+        GIT_DEPTH: "0"
+    cache:
+        paths:
+          - ./.m2
+    script:
+        - mvn -Djasypt.encryptor.password=comandProject verify sonar:sonar -Dsonar.projectKey=kurator_skillbox_java_pro_team24_AYH873d0o2Tx4AG42Ge6
+    allow_failure: true
+
+stage_deploy:
+    stage: deploy
+    only:
+        - dev
+        - master
+    before_script:
+        - eval $(ssh-agent -s)
+        - echo "$SSH_PRIVATE_KEY" | ssh-add -
+        - mkdir -p ~/.ssh
+        - chmod 700 ~/.ssh
+        - ssh-keyscan $DEV_HOST >> ~/.ssh/known_hosts
+        - chmod 644 ~/.ssh/known_hosts
+
+    script:
+        - ssh -o StrictHostKeyChecking=no $DEV_USER@$DEV_HOST docker-compose stop backend
+        - ssh -o StrictHostKeyChecking=no $DEV_USER@$DEV_HOST docker-compose rm -f backend
+        - ssh -o StrictHostKeyChecking=no $DEV_USER@$DEV_HOST cp jars/zerone-application-0.0.1-SNAPSHOT.jar jars/zerone-application-0.0.1-SNAPSHOT.jar.old
+        - scp target/zerone-application-0.0.1-SNAPSHOT.jar $DEV_USER@$DEV_HOST:$DEV_APP_PATH/jars
+        - scp docker-compose.yml $DEV_USER@$DEV_HOST:$DEV_APP_PATH
+        - ssh -o StrictHostKeyChecking=no $DEV_USER@$DEV_HOST docker-compose up -d
+
+
+
