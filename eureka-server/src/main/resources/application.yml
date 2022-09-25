@@ -7,7 +7,7 @@ spring:
 
 eureka:
   instance:
-    hostname: localhost
+    hostname: host.docker.internal
   client:
     register-with-eureka: false
     fetch-registry: false
