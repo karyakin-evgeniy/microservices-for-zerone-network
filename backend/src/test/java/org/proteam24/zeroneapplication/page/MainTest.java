@@ -49,10 +49,10 @@ public class MainTest {
         WebElement loginPassword = driver.findElement(By.id("login-password"));
         WebElement loginButton = driver.findElement(By.xpath("//*[@id=\"app\"]/div/div[2]/div/form/div[3]/button"));
         loginEmail.sendKeys("akrafit@gmail.com");
-        loginPassword.sendKeys("Xs3jd4nK");
+        loginPassword.sendKeys("WQa6J5do");
         loginButton.click();
 
-        driver.manage().timeouts().implicitlyWait(30, TimeUnit.SECONDS);
+        driver.manage().timeouts().implicitlyWait(10, TimeUnit.SECONDS);
         String userName = driver.findElement(By.xpath("//*[@id=\"app\"]/div/div[2]/header/a/span")).getText();
         Assertions.assertEquals(userName, "Rafit Akchurin");
         WebElement logoutButton = driver.findElement(By.xpath("//*[@id=\"app\"]/div/div[1]/a[2]"));

@@ -18,6 +18,6 @@ public interface FriendshipRepository extends JpaRepository<FriendshipEntity, Lo
 
     FriendshipEntity getFriendshipEntityByDstPersonAndSrcPerson(UserEntity dstPerson, UserEntity srcPerson);
 
-    @Query(value = "SELECT f FROM FriendshipEntity f WHERE f.srcPerson = :user AND f.status.code = 'FRIEND'")
-    List<FriendshipEntity> findAllBySrcPersonAndStatus(UserEntity user);
+    @Query(value = "SELECT f FROM FriendshipEntity f WHERE f.dstPerson = :user AND f.status.code = 'FRIEND'")
+    List<FriendshipEntity> findAllByDstPersonAndStatus(UserEntity user);
 }

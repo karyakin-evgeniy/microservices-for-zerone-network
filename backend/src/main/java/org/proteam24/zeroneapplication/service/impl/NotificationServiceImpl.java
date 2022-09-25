@@ -44,20 +44,20 @@ public class NotificationServiceImpl implements NotificationService {
     private Integer daysBeforeDeleted;
 
 
-    //@Scheduled(cron = "*/60 * * * * *")
-        @Scheduled(cron = "0 0 5 * * *")
+    @Scheduled(cron = "*/30 * * * * *")
+    //@Scheduled(cron = "0 0 5 * * *")
     void checkBirthdayNotifications() {
         LocalDateTime now = LocalDateTime.now();
         List<UserEntity> allUsers = userRepository.findAllByBirthDate();
         allUsers.forEach(userEntity -> {
-            List<FriendshipEntity> userFriends = friendshipRepository.findAllBySrcPersonAndStatus(userEntity);
+            List<FriendshipEntity> userFriends = friendshipRepository.findAllByDstPersonAndStatus(userEntity);
             userFriends.forEach(friendshipEntity -> {
                 NotificationEntity notification = new NotificationEntity();
-                notification.setSentTime(LocalDateTime.now());
-                notification.setNotificationType(String.valueOf(NotificationType.FRIEND_BIRTHDAY));
-                notification.setPerson(friendshipEntity.getDstPerson());
-                notification.setStatus(1);
-                notificationEntityRepository.save(notification);
+                        notification.setSentTime(LocalDateTime.now());
+                        notification.setNotificationType(String.valueOf(NotificationType.FRIENDS_BIRTHDAY));
+                        notification.setPerson(friendshipEntity.getSrcPerson());
+                        notification.setStatus(1);
+                        notificationEntityRepository.save(notification);
             });
         });
     }

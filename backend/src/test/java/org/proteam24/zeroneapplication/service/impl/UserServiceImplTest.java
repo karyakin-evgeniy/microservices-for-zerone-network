@@ -184,6 +184,7 @@ class UserServiceImplTest {
         Mockito.doReturn("token").when(jwtTokenProvider).createToken("akrafit@gmail.com");
         Mockito.doReturn(userEntity).when(userRepository).findByEmail(userEntity.getEmail());
         BaseResponseDto<UserDto> baseResponseDto = userService.login(requestDto);
+        System.out.println(baseResponseDto.getData().getToken());
         Assertions.assertEquals(requestDto.getEmail(), baseResponseDto.getData().getEmail());
         Assertions.assertEquals("token", baseResponseDto.getData().getToken());
 

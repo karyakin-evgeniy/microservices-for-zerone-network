@@ -5,7 +5,3 @@ spring:
   jpa:
     hibernate:
       ddl-auto: update
-selenium:
-  url: http://zeronenetwork.design/login
-  login: akrafit@gmail.com
-  password: WQa6J5do

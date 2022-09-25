@@ -1,6 +1,7 @@
 package org.proteam24.zeroneapplication.service;
 
 import lombok.RequiredArgsConstructor;
+import org.proteam24.zeroneapplication.repository.SupportRepository;
 import org.proteam24.zeroneapplication.dto.SupportReadDto;
 import org.proteam24.zeroneapplication.dto.SupportResponseDto;
 import org.proteam24.zeroneapplication.dto.SupportWriteDto;
@@ -38,11 +39,11 @@ public class SupportService {
     }
 
     @Transactional
-    public SupportResponseDto create(SupportWriteDto supportDto) {
+    public SupportReadDto create(SupportWriteDto supportDto) {
         return Optional.of(supportDto)
                 .map(supportWriteMapper::map)
                 .map(supportRepository::save)
-                .map(supportResponseMapper::map)
+                .map(supportReadMapper::map)
                 .orElseThrow();
     }
 }

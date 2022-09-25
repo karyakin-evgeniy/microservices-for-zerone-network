@@ -30,11 +30,13 @@ import java.util.List;
 @Slf4j
 public class UserServiceImpl implements UserService {
 
-    private final String DEFAULT_AVATAR = "https://res.cloudinary.com/dyunvdrkg/image/upload/v1654106824/ujwhl2zxd4yxrqjm9wmi.jpg";
-    private final UserRepository userRepository;
+    private final String DEFOLT_AVATAR = "https://res.cloudinary.com/dyunvdrkg/image/upload/v1654106824/ujwhl2zxd4yxrqjm9wmi.jpg";
 
+    private final UserRepository userRepository;
     private final AuthenticationManager authenticationManager;
     private final NotificationSettingsRepository notificationSettingsRepository;
+
+//    private final UserJooqRepository userJooqRepository;
 
     private final BCryptPasswordEncoder passwordEncoder;
     private final MailSenderImpl mailSenderImpl;
@@ -44,6 +46,7 @@ public class UserServiceImpl implements UserService {
     boolean useNumbersForSecretCode = false;
 
     public UserServiceImpl(UserRepository userRepository,
+//                           UserJooqRepository userJooqRepository,
                            AuthenticationManager authenticationManager,
                            NotificationSettingsRepository notificationSettingsRepository,
                            BCryptPasswordEncoder passwordEncoder,
@@ -52,6 +55,7 @@ public class UserServiceImpl implements UserService {
         this.userRepository = userRepository;
         this.authenticationManager = authenticationManager;
         this.notificationSettingsRepository = notificationSettingsRepository;
+//        this.userJooqRepository = userJooqRepository;
         this.passwordEncoder = passwordEncoder;
         this.mailSenderImpl = mailSenderImpl;
         this.jwtTokenProvider = jwtTokenProvider;
@@ -63,7 +67,7 @@ public class UserServiceImpl implements UserService {
         if (userInDB == null) {
             userEntity.setPassword(passwordEncoder.encode(userEntity.getPassword()));
             userEntity.setStatus(Status.ACTIVE);
-            userEntity.setPhoto(DEFAULT_AVATAR);
+            userEntity.setPhoto(DEFOLT_AVATAR);
             UserEntity registeredUserEntity = userRepository.save(userEntity);
             String message = userEntity.getFirstName() + ", вы успешно зарегистрированы на сайте.";
             mailSenderImpl.send(userEntity.getEmail(), "Вы зарегистрированы", message);
@@ -235,7 +239,9 @@ public class UserServiceImpl implements UserService {
         } catch (AuthenticationException e) {
             throw new BadCredentialsException("Invalid username or password");
         }
+
     }
+
     @Override
     public BaseResponseDto<List<NotificationAccountDto>> getNotification(String email) {
         UserEntity userEntity = userRepository.findByEmail(email);
@@ -258,6 +264,7 @@ public class UserServiceImpl implements UserService {
     @Override
     public BaseResponseDto<AdditionalPropDto> changeNotification(NotificationAccountDto request, String email) {
         UserEntity userEntity = userRepository.findByEmail(email);
+
         if (request.isEnable()) {
             NotificationsSettingsEntity notificationsSettings = new NotificationsSettingsEntity();
             notificationsSettings.setUser(userEntity);
@@ -268,6 +275,8 @@ public class UserServiceImpl implements UserService {
         }
         return new BaseResponseDto<>(new AdditionalPropDto("ok"));
     }
+
+
     @Override
     public LocalDateTime getLocalDateTimeZoneOffsetUtc() {
         return LocalDateTime.now(ZoneOffset.UTC);

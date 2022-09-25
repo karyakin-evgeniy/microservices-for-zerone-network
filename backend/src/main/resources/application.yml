@@ -2,6 +2,7 @@ spring:
   main:
     allow-circular-references: true
   datasource:
+#    url: jdbc:mysql://zeronenetwork.design:3308/comand_DB?sessionVariables=sql_mode=''&useUnicode=true&serverTimezone=UTC&useSSL=false&allowPublicKeyRetrieval=true
     url: jdbc:mysql://localhost:3308/comand_DB?sessionVariables=sql_mode=''&useUnicode=true&serverTimezone=UTC&useSSL=false&allowPublicKeyRetrieval=true
     username: ENC(RErI7tJaIqOhIj0A7Jqk1mcWvF778LLhA8biBOynZ+jfRunptLsZnWWUpRKgIzlJ)
     password: ENC(05Kx6itEXQixd4sLPlWgezvIvT0OUUyRyez8sLNbRKsWqO1GBzQCwgHW4CGpLQwC)
@@ -23,12 +24,14 @@ spring:
     debug: true
   liquibase:
     enabled: true
+  application:
+    name: zerone-backend
 jwt:
   token:
     secret: ENC(nc+jtLrBqAlCWyddpdcmPg8k0p7RaJn03A0CfMXuK0nckGgFMRRJ5NonaKjEOaG+)
     expired: 864000000
 server:
-  port: 8086
+  port: 8087
 logging:
   level:
     root: INFO
@@ -56,7 +59,8 @@ socketio:
   pingTimeout: 6000000
   pingInterval: 25000
 redis:
-  host: 127.0.0.1
+#  host: 195.161.114.18
+  host: localhost
   port: 6379
   password: eYVX7EwVmmxKFCDmwMtyKVge8oLd2t81
 management:

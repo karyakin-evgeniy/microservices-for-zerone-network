@@ -10,20 +10,27 @@ import org.proteam24.zeroneapplication.entity.DialogEntity;
 import org.proteam24.zeroneapplication.entity.MessageEntity;
 import org.proteam24.zeroneapplication.entity.UserEntity;
 import org.proteam24.zeroneapplication.hash.ClientHash;
+import org.proteam24.zeroneapplication.hash.OnLineDialog;
 import org.proteam24.zeroneapplication.repository.*;
 import org.proteam24.zeroneapplication.security.jwt.JwtTokenProvider;
 import org.proteam24.zeroneapplication.service.SocketIOHandlerService;
 import org.proteam24.zeroneapplication.service.SocketIOService;
+import org.springframework.stereotype.Component;
 import org.springframework.stereotype.Service;
 
 import javax.annotation.PostConstruct;
 import javax.annotation.PreDestroy;
+import java.util.ArrayList;
+import java.util.Collection;
+import java.util.List;
 import java.util.UUID;
 
 
 @Slf4j
+@Component
 @Service(value = "socketIOService")
 public class SocketIOServiceImpl implements SocketIOService {
+
 
     private final JwtTokenProvider jwtTokenProvider;
     private final UserRepository userRepository;
@@ -32,6 +39,7 @@ public class SocketIOServiceImpl implements SocketIOService {
     private SocketIOServer socketIOServer;
     private final ClientHashRepository clientHashRepository;
     private final OnLineDialogRepository onLineDialogRepository;
+
 
     public SocketIOServiceImpl(JwtTokenProvider jwtTokenProvider, UserRepository userRepository, DialogEntityRepository dialogEntityRepository, MessageEntityRepository messageEntityRepository, SocketIOServer socketIOServer, ClientHashRepository clientHashRepository, OnLineDialogRepository onLineDialogRepository) {
         this.jwtTokenProvider = jwtTokenProvider;
@@ -43,14 +51,23 @@ public class SocketIOServiceImpl implements SocketIOService {
         this.clientHashRepository = clientHashRepository;
     }
 
+    /**
+     * После создания контейнера Spring IoC он запускается после загрузки компонента SocketIOServiceImpl.
+     * *
+     */
     @PostConstruct
     private void autoStartup() {
         start();
     }
+
+    /**
+     * Контейнер Spring IoC закрывается перед уничтожением объекта SocketIOServiceImpl Bean, чтобы избежать перезапуска проблемы с занятостью порта службы проекта.
+     */
     @PreDestroy
     private void autoStop() {
         stop();
     }
+
     @Override
     public void start() {
         socketIOServer.addListeners(new SocketIOHandlerService(jwtTokenProvider,
@@ -62,6 +79,8 @@ public class SocketIOServiceImpl implements SocketIOService {
                 onLineDialogRepository));
         socketIOServer.start();
     }
+
+
     @Override
     public void stop() {
         if (socketIOServer != null) {
@@ -69,6 +88,7 @@ public class SocketIOServiceImpl implements SocketIOService {
             socketIOServer = null;
         }
     }
+
     @Override
     public void pushMessageToUser(Long userId, DialogEntity dialog, MessageEntity messageEntity, Long recipientUnReadCount) {
         Long recipientUserId = messageEntity.getRecipient().getId();
@@ -82,6 +102,7 @@ public class SocketIOServiceImpl implements SocketIOService {
             recipientClient.sendEvent(UNREAD_RESPONSE, recipientUnReadCount);
         }
     }
+
     @Override
     public void pushNotificationToUser(SocketNotificationDto socketNotificationDto, UserEntity author) {
         Long recipientUserId = author.getId();

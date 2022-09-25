@@ -1,6 +1,7 @@
 package org.proteam24.zeroneapplication.entity;
 
 import lombok.*;
+import org.proteam24.zeroneapplication.entity.enumerated.ReadStatus;
 
 import javax.persistence.*;
 import java.time.LocalDateTime;

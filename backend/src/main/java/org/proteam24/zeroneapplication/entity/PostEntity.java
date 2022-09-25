@@ -38,6 +38,9 @@ public class PostEntity {
 
     private int likes = 0;
 
+//    @Column(name = "tags")
+//    private String[] tags = new String[1];
+
     @OneToMany(cascade = CascadeType.ALL)
     @JoinColumn(name = "post_id", insertable = false, updatable = false)
     private List<Tag2PostEntity> tag2Posts;

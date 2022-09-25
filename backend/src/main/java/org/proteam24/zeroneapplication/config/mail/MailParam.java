@@ -1,5 +1,6 @@
 package org.proteam24.zeroneapplication.config.mail;
 
+import lombok.Data;
 import lombok.Getter;
 import lombok.Setter;
 import org.springframework.boot.context.properties.ConfigurationProperties;

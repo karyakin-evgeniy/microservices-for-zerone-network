@@ -24,7 +24,7 @@ public class LoggingAspect {
             log.info("after returning - class {}, result {}", obj, result);
             return result;
         } catch (Throwable ex) {
-            log.error("after throwing - class {}, exception {}: {}", obj, ex.getClass(), ex.getMessage());
+            log.info("after throwing - class {}, exception {}: {}", obj, ex.getClass(), ex.getMessage());
             throw ex;
         } finally {
             log.info("after (finally) - class {}", obj);

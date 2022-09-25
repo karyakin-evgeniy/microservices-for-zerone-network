@@ -1,9 +1,7 @@
 package org.proteam24.zeroneapplication.config;
 
 
-//import org.proteam24.zeroneapplication.security.jwt.JwtConfigurer;
-
-import org.proteam24.zeroneapplication.security.jwt.JwtTokenFilter;
+import org.proteam24.zeroneapplication.security.jwt.JwtConfigurer;
 import org.proteam24.zeroneapplication.security.jwt.JwtTokenProvider;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
@@ -12,15 +10,12 @@ import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
 import org.springframework.security.config.http.SessionCreationPolicy;
-import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
-import org.springframework.web.servlet.HandlerExceptionResolver;
 
 @Configuration
 public class SecurityConfig extends WebSecurityConfigurerAdapter {
 
 
     private final JwtTokenProvider jwtTokenProvider;
-    private final HandlerExceptionResolver handlerExceptionResolver;
 
     private static final String ADMIN_ENDPOINT = "/api/v1/admin/**";
     private static final String LOGIN_ENDPOINT = "/api/v1/auth/**";
@@ -34,9 +29,8 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
     private static final String SOURCE = "/api/live/ws";
 
     @Autowired
-    public SecurityConfig(JwtTokenProvider jwtTokenProvider, HandlerExceptionResolver handlerExceptionResolver) {
+    public SecurityConfig(JwtTokenProvider jwtTokenProvider) {
         this.jwtTokenProvider = jwtTokenProvider;
-        this.handlerExceptionResolver = handlerExceptionResolver;
     }
 
     @Bean
@@ -55,15 +49,12 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
                 .and()
                 .authorizeRequests()
                 .antMatchers(LOGIN_ENDPOINT, ACCOUNT_ENDPOINT, AUTHORIZED_ENDPOINT).permitAll()
-                .antMatchers(LOGIN_ENDPOINT, ACCOUNT_ENDPOINT).permitAll()
                 .antMatchers(API_DOCS, SWAGGER_ENDPOINT).permitAll()
                 .antMatchers(ACTUATOR, ACTUATOR2, SOURCE).permitAll()
                 .antMatchers(POST_ENDPOINT).authenticated()
                 .antMatchers(ADMIN_ENDPOINT).hasRole("ADMIN")
                 .anyRequest().authenticated()
-                .and();
-
-        http.addFilterBefore(new JwtTokenFilter(authenticationManagerBean(), jwtTokenProvider, handlerExceptionResolver), UsernamePasswordAuthenticationFilter.class);
-//                .apply(new JwtConfigurer(jwtTokenProvider, handlerExceptionResolver, authenticationManager()));
+                .and()
+                .apply(new JwtConfigurer(jwtTokenProvider));
     }
 }

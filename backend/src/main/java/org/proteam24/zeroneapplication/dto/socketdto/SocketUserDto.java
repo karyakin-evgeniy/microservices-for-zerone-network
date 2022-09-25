@@ -49,7 +49,9 @@ public class SocketUserDto {
     @JsonProperty("is_blocked")
     private boolean isBlocked;
     private String token;
+    //private String code;
     private String passwd1;
+    //private String passwd2;
     private boolean deleted;
 
     public static SocketUserDto fromUser(UserEntity userEntity) {

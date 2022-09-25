@@ -17,12 +17,12 @@ services:
       - MYSQL_DATABASE=comand_DB
     cap_add:
       - SYS_NICE
-  frontend:
-    restart: always
-    pull_policy: always
-    image: alex2902/skillbox-frontend
-    ports:
-      - "80:80"
+#  frontend:
+#    restart: always
+#    pull_policy: always
+#    image: alex2902/skillbox-frontend
+#    ports:
+#      - "80:80"
   cache:
     image: redis:6.2-alpine
     restart: always
@@ -46,7 +46,7 @@ services:
       REDIS_PORT: 6379
       REDIS_PASSWORD: eYVX7EwVmmxKFCDmwMtyKVge8oLd2t81
     ports:
-      - "8086:8086"
+      - "8087:8087"
       - target: 1111
         published: 1111
         protocol: tcp

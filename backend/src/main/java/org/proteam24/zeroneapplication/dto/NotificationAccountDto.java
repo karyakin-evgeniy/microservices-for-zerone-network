@@ -4,6 +4,7 @@ import com.fasterxml.jackson.annotation.JsonProperty;
 import lombok.Getter;
 import lombok.RequiredArgsConstructor;
 import lombok.Setter;
+import org.proteam24.zeroneapplication.entity.enumerated.NotificationType;
 
 
 @Getter

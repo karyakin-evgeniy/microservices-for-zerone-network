@@ -34,6 +34,7 @@ class JwtTokenProviderTest {
     void createToken() {
         String token = jwtTokenProvider.createToken("user@user.ru");
         Assertions.assertTrue(token.length() > 0);
+        System.out.println(token);
     }
 
     @Test

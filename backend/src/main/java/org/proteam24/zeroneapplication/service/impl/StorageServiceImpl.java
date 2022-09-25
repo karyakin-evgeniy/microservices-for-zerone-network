@@ -6,6 +6,7 @@ import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.proteam24.zeroneapplication.config.StorageConfig;
 import org.proteam24.zeroneapplication.dto.BaseResponseDto;
+import org.proteam24.zeroneapplication.dto.UserDto;
 import org.proteam24.zeroneapplication.entity.FileEntity;
 import org.proteam24.zeroneapplication.entity.UserEntity;
 import org.proteam24.zeroneapplication.repository.UserRepository;
@@ -37,7 +38,7 @@ public class StorageServiceImpl implements StorageService {
                 UserEntity userEntity = userRepository.findByEmail(userName);
                 userEntity.setPhoto(uploadResult.get("secure_url").toString());
                 userRepository.save(userEntity);
-                return new BaseResponseDto<Map>(Map.of("id", 1, "url", uploadResult.get("url")), "");
+                return new BaseResponseDto(UserDto.fromUser(userEntity), "");
             } else if (type.equals("POSTIMAGE")) {
                 uploadResult.get("url");
                 return new BaseResponseDto<Map>(Map.of("id", 1, "url", uploadResult.get("url")), "");

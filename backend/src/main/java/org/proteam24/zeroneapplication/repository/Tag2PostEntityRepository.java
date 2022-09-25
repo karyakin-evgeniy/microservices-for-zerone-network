@@ -5,6 +5,7 @@ import org.proteam24.zeroneapplication.entity.Tag2PostEntity;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Modifying;
 import org.springframework.data.jpa.repository.Query;
+import org.springframework.data.repository.query.Param;
 import org.springframework.transaction.annotation.Transactional;
 
 public interface Tag2PostEntityRepository extends JpaRepository<Tag2PostEntity, Long> {

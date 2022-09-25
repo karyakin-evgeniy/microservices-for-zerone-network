@@ -2,43 +2,54 @@ package org.proteam24.zeroneapplication.service;
 
 import lombok.extern.slf4j.Slf4j;
 import org.proteam24.zeroneapplication.dto.BaseResponseDto;
-import org.proteam24.zeroneapplication.dto.BaseResponseSomeDto;
 import org.proteam24.zeroneapplication.dto.CommentDto;
+import org.proteam24.zeroneapplication.dto.BaseResponseSomeDto;
 import org.proteam24.zeroneapplication.dto.CreateCommentDto;
-import org.proteam24.zeroneapplication.entity.CommentEntity;
-import org.proteam24.zeroneapplication.entity.LikeEntity;
-import org.proteam24.zeroneapplication.entity.PostEntity;
-import org.proteam24.zeroneapplication.entity.UserEntity;
+import org.proteam24.zeroneapplication.dto.socketdto.SocketNotificationDto;
+import org.proteam24.zeroneapplication.entity.*;
 import org.proteam24.zeroneapplication.entity.enumerated.NotificationType;
 import org.proteam24.zeroneapplication.repository.*;
 import org.proteam24.zeroneapplication.security.jwt.JwtTokenProvider;
 import org.proteam24.zeroneapplication.service.impl.NotificationServiceImpl;
 import org.proteam24.zeroneapplication.service.impl.SocketIOServiceImpl;
+import org.proteam24.zeroneapplication.entity.CommentEntity;
+import org.proteam24.zeroneapplication.entity.LikeEntity;
+import org.proteam24.zeroneapplication.entity.PostEntity;
+import org.proteam24.zeroneapplication.entity.UserEntity;
+import org.proteam24.zeroneapplication.repository.CommentsRepository;
+import org.proteam24.zeroneapplication.repository.LikesRepository;
+import org.proteam24.zeroneapplication.repository.PostRepository;
+import org.proteam24.zeroneapplication.repository.UserRepository;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
-import java.util.ArrayList;
-import java.util.Collections;
-import java.util.List;
+import java.util.*;
 
 @Service
 @Slf4j
 public class CommentsService {
 
+
     private final CommentsRepository commentsRepository;
     private final PostRepository postRepository;
     private final UserRepository userRepository;
     private final LikesRepository likesRepository;
+    private final JwtTokenProvider jwtTokenProvider;
+    private final SocketIOServiceImpl socketIOService;
+    private final NotificationEntityRepository notificationEntityRepository;
     private final NotificationSettingsRepository notificationSettingsRepository;
     private final NotificationServiceImpl notificationService;
 
-    public CommentsService(CommentsRepository commentsRepository, PostRepository postRepository, UserRepository userRepository, LikesRepository likesRepository, NotificationSettingsRepository notificationSettingsRepository, NotificationServiceImpl notificationService) {
+    public CommentsService(CommentsRepository commentsRepository, PostRepository postRepository, UserRepository userRepository, LikesRepository likesRepository, JwtTokenProvider jwtTokenProvider, SocketIOServiceImpl socketIOService, NotificationEntityRepository notificationEntityRepository, NotificationSettingsRepository notificationSettingsRepository, NotificationServiceImpl notificationService) {
         this.commentsRepository = commentsRepository;
         this.postRepository = postRepository;
         this.userRepository = userRepository;
         this.likesRepository = likesRepository;
+        this.jwtTokenProvider = jwtTokenProvider;
+        this.socketIOService = socketIOService;
+        this.notificationEntityRepository = notificationEntityRepository;
         this.notificationSettingsRepository = notificationSettingsRepository;
         this.notificationService = notificationService;
     }

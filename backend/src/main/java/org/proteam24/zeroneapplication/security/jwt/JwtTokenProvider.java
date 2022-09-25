@@ -34,6 +34,13 @@ public class JwtTokenProvider {
         return new BCryptPasswordEncoder();
     }
 
+/*
+    @Bean
+    public PasswordEncoder passwordEncoder() {
+        return PasswordEncoderFactories.createDelegatingPasswordEncoder();
+    }
+*/
+
     @PostConstruct
     protected void init() {
 

@@ -2,6 +2,7 @@ package org.proteam24.zeroneapplication.dto;
 
 import lombok.Value;
 
+import java.time.LocalDate;
 import java.time.LocalDateTime;
 
 @Value

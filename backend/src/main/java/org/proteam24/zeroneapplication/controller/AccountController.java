@@ -1,5 +1,6 @@
 package org.proteam24.zeroneapplication.controller;
 
+//import io.swagger.annotations.*;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.security.SecurityRequirement;
 import io.swagger.v3.oas.annotations.tags.Tag;
@@ -9,7 +10,9 @@ import org.springframework.web.bind.annotation.*;
 
 import java.security.NoSuchAlgorithmException;
 import java.security.Principal;
+import java.util.Collections;
 import java.util.List;
+import java.util.Map;
 
 @RestController
 @RequestMapping(value = "/api/v1/account")
@@ -49,7 +52,7 @@ public class AccountController {
     @PutMapping("/password/set")
     @Operation(security = @SecurityRequirement(name = "bearer-key"),
             summary = "Смена пароля", description = "Запроля на смену пароля")
-    public BaseResponseDto<AdditionalPropDto> passwordSet(@RequestBody UsernamePasswordRecoveryDto usernamePasswordRecoveryDto){
+    public BaseResponseDto<AdditionalPropDto> passwordSet(@RequestBody UsernamePasswordRecoveryDto usernamePasswordRecoveryDto) throws NoSuchAlgorithmException {
 
         return userService.changePassword(usernamePasswordRecoveryDto.getPassword(), usernamePasswordRecoveryDto.getToken());
     }
@@ -75,8 +78,8 @@ public class AccountController {
             summary = "Уведомления", description = "Получение уведомлений")
     @PutMapping(value = "/notifications")
     public BaseResponseDto<AdditionalPropDto> changeNotifications(@RequestBody NotificationAccountDto request,
-                                                                  Principal principal) {
-        if (principal != null) {
+                                                        Principal principal) {
+        if (principal != null){
             return userService.changeNotification(request, principal.getName());
         }
         return new BaseResponseDto<>(null, "");

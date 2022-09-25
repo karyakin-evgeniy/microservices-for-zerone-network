@@ -3,7 +3,7 @@ package org.proteam24.zeroneapplication.controller;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import lombok.RequiredArgsConstructor;
-import org.proteam24.zeroneapplication.dto.SupportResponseDto;
+import org.proteam24.zeroneapplication.dto.SupportReadDto;
 import org.proteam24.zeroneapplication.dto.SupportWriteDto;
 import org.proteam24.zeroneapplication.service.SupportService;
 import org.springframework.http.HttpStatus;
@@ -20,7 +20,7 @@ public class SupportRestController {
     @PostMapping("/support")
     @ResponseStatus(HttpStatus.CREATED)
     @Operation(summary = "Запрос в поддержку", description = "Создание запроса в поддержку")
-    public SupportResponseDto create(@RequestBody SupportWriteDto support) {
+    public SupportReadDto create(@RequestBody SupportWriteDto support) {
         return supportService.create(support);
     }
 }

@@ -1,11 +1,14 @@
 package org.proteam24.zeroneapplication.repository;
 
+import liquibase.pro.packaged.Q;
+import org.apache.catalina.LifecycleState;
 import org.proteam24.zeroneapplication.entity.UserEntity;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 
+import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.util.List;
 
@@ -19,5 +22,6 @@ public interface UserRepository extends JpaRepository<UserEntity,Long> {
     Page<UserEntity> getLastRegisteredUsersWithLimit(Pageable pageable);
 
     @Query(value = "SELECT u FROM UserEntity u where month(u.birthDate) = month(current_date) and day(u.birthDate) = day(current_date)")
+    //refactor
     List<UserEntity> findAllByBirthDate();
 }

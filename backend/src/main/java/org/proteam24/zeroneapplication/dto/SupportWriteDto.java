@@ -5,8 +5,8 @@ import lombok.Value;
 @Value
 public class SupportWriteDto {
 
-    String e_mail;
-    String last_name;
+    String firstname;
+    String lastname;
+    String email;
     String message;
-    String first_name;
 }
